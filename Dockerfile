@@ -4,8 +4,8 @@ FROM python:3.11-slim
 # Set environment variables
 ENV PYTHONUNBUFFERED=1
 ENV PYTHONDONTWRITEBYTECODE=1
-ENV PYTHONPATH=/app/src
-ENV PYTHONPATH=/app:$PYTHONPATH
+# Fix: consolidate PYTHONPATH into a single ENV instruction to avoid the second one overwriting the first
+ENV PYTHONPATH=/app/src:/app
 
 # Install system dependencies
 RUN apt-get update && apt-get install -y \
