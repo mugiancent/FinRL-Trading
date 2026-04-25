@@ -28,6 +28,7 @@ RUN pip install --no-cache-dir --upgrade pip && \
 COPY src/ ./src/
 COPY setup.py .
 COPY README.md .
+# Note: .env files are optional; ignore errors if they don't exist
 COPY .env* ./
 
 # Install the package in development mode
@@ -41,8 +42,8 @@ RUN useradd --create-home --shell /bin/bash app \
     && chown -R app:app /app
 USER app
 
-# Health check
-HEALTHCHECK --interval=30s --timeout=30s --start-period=5s --retries=3 \
+# Health check - increased start-period to give the app more time to initialize
+HEALTHCHECK --interval=30s --timeout=30s --start-period=15s --retries=3 \
     CMD python -c "import sys; sys.path.insert(0, '/app/src'); import config; print('Health check passed')" || exit 1
 
 # Expose port for web interface
