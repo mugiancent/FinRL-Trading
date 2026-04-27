@@ -35,7 +35,8 @@ COPY .env* ./
 RUN pip install -e .
 
 # Create necessary directories
-RUN mkdir -p data logs
+# Also create a models/ directory for saving trained RL model checkpoints locally
+RUN mkdir -p data logs models
 
 # Create non-root user
 RUN useradd --create-home --shell /bin/bash app \
