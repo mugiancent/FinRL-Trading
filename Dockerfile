@@ -36,7 +36,8 @@ RUN pip install -e .
 
 # Create necessary directories
 # Also create a models/ directory for saving trained RL model checkpoints locally
-RUN mkdir -p data logs models
+# Added notebooks/ so I can mount Jupyter notebooks for experimentation without rebuilding
+RUN mkdir -p data logs models notebooks
 
 # Create non-root user
 RUN useradd --create-home --shell /bin/bash app \
@@ -49,6 +50,9 @@ HEALTHCHECK --interval=30s --timeout=30s --start-period=15s --retries=3 \
 
 # Expose port for web interface
 EXPOSE 8501
+
+# Also expose 8888 for Jupyter if I spin it up locally for experimentation
+EXPOSE 8888
 
 # Default command - use the main CLI
 CMD ["python", "src/main.py", "dashboard"]
