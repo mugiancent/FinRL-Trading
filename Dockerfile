@@ -12,6 +12,7 @@ RUN apt-get update && apt-get install -y \
     build-essential \
     curl \
     sqlite3 \
+    git \
     && rm -rf /var/lib/apt/lists/*
 
 # Create app directory
@@ -37,7 +38,8 @@ RUN pip install -e .
 # Create necessary directories
 # Also create a models/ directory for saving trained RL model checkpoints locally
 # Added notebooks/ so I can mount Jupyter notebooks for experimentation without rebuilding
-RUN mkdir -p data logs models notebooks
+# Added results/ for storing backtest outputs and performance reports
+RUN mkdir -p data logs models notebooks results
 
 # Create non-root user
 RUN useradd --create-home --shell /bin/bash app \
